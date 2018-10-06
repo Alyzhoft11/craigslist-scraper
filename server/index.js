@@ -19,7 +19,10 @@ function getResults(body) {
         const title = result.find('.result-title').text();
         const date = result.find('.result-date').text();
         const price = $(result.find('.result-price').get(0)).text();
-        const location = result.find('.result-hood').text();
+        let location = result.find('.result-hood').text()
+            if (location){
+                location = location.match(/\((.*)\)/)[1];
+            }
         const imageData = result.find('a.result-image').attr('data-ids');
         let images = [];
         if (imageData) {
@@ -48,7 +51,7 @@ app.get('/', (req, res) => {
 
 app.get('/search/:location/:search_term', (req, res) => {
     const { location, search_term } = req.params;
-    const url = `https://${location}.craigslist.org/search/msa?query=${search_term}`
+    const url = `https://${location}.craigslist.org/search/sss?query=${search_term}`
     fetch(url)
         .then(res => res.text())
         .then(body => {
