@@ -17,6 +17,7 @@ function getResults(body) {
     rows.each((index, element) => {
         const result = $(element);
         const title = result.find('.result-title').text();
+        const link = result.find('.result-title').attr('href');
         const date = result.find('.result-date').text();
         const price = $(result.find('.result-price').get(0)).text();
         let location = result.find('.result-hood').text()
@@ -33,6 +34,7 @@ function getResults(body) {
         }
         results.push({
             title,
+            link,
             date,
             price,
             location,
@@ -51,7 +53,7 @@ app.get('/', (req, res) => {
 
 app.get('/search/:location/:search_term', (req, res) => {
     const { location, search_term } = req.params;
-    const url = `https://${location}.craigslist.org/search/sss?query=${search_term}`
+    const url = `https://${location}.craigslist.org/search/sss?query=${search_term}&sort=rel`
     fetch(url)
         .then(res => res.text())
         .then(body => {
